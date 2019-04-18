@@ -1,0 +1,21 @@
+{
+  "name": "mongodbapp",
+  "version": "1.0.0",
+  "description": "a school db ",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "mongo",
+    "mongoose",
+    "npm"
+  ],
+  "author": "kingsley",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.16.4",
+    "mongoose": "^5.5.2",
+    "nodemon": "^1.18.11"
+  }
+}

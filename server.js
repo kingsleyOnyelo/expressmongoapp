@@ -35,7 +35,27 @@ app.post('/teacher', async (req, res)=>{
         })
     }
 
-})
+});
+
+
+app.get('/teachers/', async (req, res)=>{
+    const search = req.query.gender ? {gender: req.query.gender} : {};
+    try {
+        const teachers = await teacherModel.find(search);
+        res.status(200).json({
+            status: "success",
+            data: teachers
+        })
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({
+            status: error,
+            message: "An error occured"
+        })
+    }
+    
+
+});
 
 app.listen(2004).on('listening', ()=>{
     console.log("our server listening on port 2004")

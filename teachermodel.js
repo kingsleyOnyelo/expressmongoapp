@@ -1,4 +1,11 @@
 const mongoose = require('mongoose');
+const bcrypt = require('bcrypt');
+
+
+    bcrypt.hash('myPassword', 10, function(err, hash) {
+      // Store hash in database
+    });
+
 const teacherSchema = new mongoose.Schema({
     first_name:{
         type: String,
@@ -36,6 +43,10 @@ const teacherSchema = new mongoose.Schema({
     }
 });
 
+
+/* teacherSchema.method.generateHash = ()=>{
+    return bcrypt.hashSync(password, bcrypt.genSaltSync(10));
+} */
 
 const teacherModel = mongoose.model('teacher', teacherSchema);
 

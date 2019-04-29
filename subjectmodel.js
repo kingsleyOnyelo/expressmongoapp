@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+
 const subjectSchema = new mongoose.Schema({
     name:{
         type: String,
@@ -9,5 +10,16 @@ const subjectSchema = new mongoose.Schema({
         type: String,
         required: true
     },
+    project:{
+        type: String,
+        required:true
+    },
+    student:{
+        type: String,
+        required: true
+    }
 
 });
+
+const SubjectModel = mongoose.model('subject', subjectSchema);
+module.exports = SubjectModel;

@@ -16,7 +16,7 @@ router.post('/', async (req, res)=>{
        const result = teacher.toJSON();
        delete result.password;
 
-       const token =jwt.sign({id: teacher.id}, SECRET, {expiresIn: '2h'});
+       const token =jwt.sign({id: teacher.id}, SECRET, {expiresIn: '1h'});
 
        res.status(200).json({
            status: 'success',
@@ -62,16 +62,16 @@ router.post('/login', async (req, res)=>{
     try {
         const teacher = await teacherModel.findOne({email:req.body.email}, '+password');
 
-        if(!teacher) return res.status(404).json({status: "error", message: "Teacher not found"});
+        if(!teacher) return res.status(401).json({status: "error", message: "Invalid login detials"});
 
         const ispassword = await bcrypt.compare(req.body.password, teacher.password);
        
 
-        if(!ispassword) return res.json({status: 'error', message:"invalid password"});
+        if(!ispassword) return res.json({status: 'error', message:"invalid login detials"});
 
         const token = jwt.sign({id: teacher.id}, SECRET);
 
-        res.json({token});
+        res.json({status: "success",data: {token}});
 
 
     } catch (error) {

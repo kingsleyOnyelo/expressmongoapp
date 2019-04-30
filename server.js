@@ -3,6 +3,8 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const TeacherRoute = require('./teachersRoute');
 const subjectRoute = require('./subjectRoute');
+const port = process.env.PORT|| 2004;
+const path = require('path');
 
 
 const app = express();
@@ -18,10 +20,17 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 
+// Serve static files from the React frontend app
+app.use(express.static(path.join(__dirname, 'client/build')))
+
+// Anything that doesn't match the above, send back index.html
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname + '/client/build/index.html'))
+})
 
 app.use('/teachers', TeacherRoute);
 app.use('/subject', subjectRoute)
 
-app.listen(2004).on('listening', ()=>{
+app.listen(port).on('listening', ()=>{
     console.log("our server listening on port 2004");
 })

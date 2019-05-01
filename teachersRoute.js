@@ -3,9 +3,10 @@ const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const express = require('express');
 const router = express.Router();
+const env = require('./env');
 
 
-const SECRET = "Lev3lup!7456";
+
 
 router.post('/', async (req, res)=>{
 
@@ -16,7 +17,7 @@ router.post('/', async (req, res)=>{
        const result = teacher.toJSON();
        delete result.password;
 
-       const token =jwt.sign({id: teacher.id}, SECRET, {expiresIn: '1h'});
+       const token =jwt.sign({id: teacher.id}, env.jwt_secret, {expiresIn: '2h'});
 
        res.status(200).json({
            status: 'success',
@@ -42,7 +43,7 @@ router.get('/profile', async (req, res)=>{
 
         const token = authHeader.split(' ')[1];
 
-        const tokenData = jwt.verify(token, SECRET);
+        const tokenData = jwt.verify(token, env.jwt_secret);
 
         const teacher = await teacherModel.findById(tokenData.id);
        res.json({
@@ -69,7 +70,7 @@ router.post('/login', async (req, res)=>{
 
         if(!ispassword) return res.json({status: 'error', message:"invalid login detials"});
 
-        const token = jwt.sign({id: teacher.id}, SECRET);
+        const token = jwt.sign({id: teacher.id}, env.jwt_secret);
 
         res.json({status: "success",data: {token}});
 
@@ -128,7 +129,7 @@ router.delete('/:email', async(req, res)=>{
 
 
 router.get('/', async (req, res)=>{
-    const search = req.query.gender ? {gender: req.query.gender} : {};
+    const search = req.query.name ? {gender: req.query.name} : {};
     try {
         const teachers = await teacherModel.find(search);
         res.status(200).json({

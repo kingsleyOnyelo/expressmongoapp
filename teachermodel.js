@@ -7,35 +7,23 @@ const bcrypt = require('bcrypt');
     });
 
 const teacherSchema = new mongoose.Schema({
-    first_name:{
+    department:{
         type: String,
         required: true
     },
 
-    last_name:{
-        type: String,
-        required: true
-    },
-
-    gender:{
-        type : String,
-        enum:['male', 'female'],
-        required: true
-    },
-    age:{
-        type: Number
-    },
-
-    level:{
+    name:{
         type: String,
         required: true
     },
 
     email:{
         type : String,
-        unique: true,
-        required: true,
-        lowercase: true
+        required: true
+    },
+    age:{
+        type: Number,
+        required: false
     },
 
     password:{
@@ -46,9 +34,7 @@ const teacherSchema = new mongoose.Schema({
 });
 
 
-/* teacherSchema.method.generateHash = ()=>{
-    return bcrypt.hashSync(password, bcrypt.genSaltSync(10));
-} */
+
 
 const teacherModel = mongoose.model('teacher', teacherSchema);
 
